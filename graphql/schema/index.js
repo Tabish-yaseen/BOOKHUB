@@ -1,11 +1,11 @@
 const { buildSchema } = require('graphql');
 
 module.exports = buildSchema(`
-  type User {
+  type Author {
     _id: ID!
     username: String!
     email: String!
-    password: String!
+    password: String
   }
 
   type Genre {
@@ -17,11 +17,11 @@ module.exports = buildSchema(`
   type Book {
     _id: ID!
     title: String!
-    author: User!
+    author: Author!
     genres: [Genre!]!
   }
 
-  input UserInput {
+  input AuthorInput {
     username: String!
     email: String!
     password: String!
@@ -39,19 +39,17 @@ module.exports = buildSchema(`
   }
 
   type RootQuery {
-    users: [User!]!
+    authors: [Author!]!
     genres: [Genre!]!
     books: [Book!]!
-    
   }
 
   type RootMutation {
-    createUser(userInput: UserInput): User
+    createAuthor(authorInput: AuthorInput): Author
 
     createGenre(genreInput: GenreInput): Genre
     updateGenre(id: ID!, genreInput: GenreInput): Genre
     
-
     createBook(bookInput: BookInput): Book
     updateBook(id: ID!, bookInput: BookInput): Book
     deleteBook(id: ID!): Book
