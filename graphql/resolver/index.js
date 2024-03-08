@@ -1,8 +1,10 @@
 const authorResolver=require('./author')
+const genreResolver=require('./genre')
 
 
 const rootResolver={
-    ...authorResolver
+    ...authorResolver,
+    ...genreResolver
    
 }
 
