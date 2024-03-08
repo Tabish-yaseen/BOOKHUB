@@ -3,6 +3,7 @@ const bodyParser = require("body-parser");
 const { graphqlHTTP } = require("express-graphql");
 
 const mongoose = require("mongoose");
+const graphQlSchema=require('./graphql/schema/index')
 
 require('dotenv').config();
 
@@ -12,14 +13,14 @@ app.use(bodyParser.json());
 
 
 
-// app.use(
-//   "/graphql",
-//   graphqlHTTP({
-//     schema: ,
-//     rootValue:,
-//     graphiql:true
-//   })
-// )
+app.use(
+  "/graphql",
+  graphqlHTTP({
+    schema:graphQlSchema ,
+    // rootValue:,
+    graphiql:true
+  })
+)
 
 const PORT = process.env.PORT || 3000;
 mongoose.connect(process.env.MONGO_URL)
