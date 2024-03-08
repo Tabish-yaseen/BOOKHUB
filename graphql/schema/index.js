@@ -17,6 +17,8 @@ module.exports = buildSchema(`
   type Book {
     _id: ID!
     title: String!
+    description: String!
+    publicationDate: String!
     author: Author!
     genres: [Genre!]!
   }
@@ -34,6 +36,8 @@ module.exports = buildSchema(`
 
   input BookInput {
     title: String!
+    description: String!
+    publicationDate: String!
     authorId: ID!
     genreIds: [ID!]!
   }
@@ -49,7 +53,7 @@ module.exports = buildSchema(`
 
     createGenre(genreInput: GenreInput): Genre
     updateGenre(id: ID!, genreInput: GenreInput): Genre
-    
+
     createBook(bookInput: BookInput): Book
     updateBook(id: ID!, bookInput: BookInput): Book
     deleteBook(id: ID!): Book
