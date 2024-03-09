@@ -29,6 +29,7 @@ module.exports = buildSchema(`
     password: String!
   }
 
+
   input GenreInput {
     name: String!
     description: String!
@@ -42,14 +43,22 @@ module.exports = buildSchema(`
     genreIds: [ID!]!
   }
 
+  type AuthData{
+    authorId:ID!
+    token:String!
+    tokenExpiration:Int!
+}
+
   type RootQuery {
     authors: [Author!]!
     genres: [Genre!]!
     books: [Book!]!
+    
   }
 
   type RootMutation {
     createAuthor(authorInput: AuthorInput): Author
+    login(email:String!,password:String!):AuthData!
 
     createGenre(genreInput: GenreInput): Genre
     updateGenre(id: ID!, genreInput: GenreInput): Genre

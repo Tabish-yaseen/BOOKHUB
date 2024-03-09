@@ -3,7 +3,7 @@ const Author = require('../../models/author');
 const Genre = require('../../models/genre');
 
 const getAuthor = async (authorId) => {
-  console.log((authorId));
+  // console.log((authorId));
   try {
     const author = await Author.findById(authorId);
     return {

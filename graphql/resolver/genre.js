@@ -2,7 +2,10 @@ const Genre=require('../../models/genre')
 
 
 module.exports={
-    createGenre: async ({ genreInput }) => {
+    createGenre: async ({ genreInput },req) => {
+        if(!req.isAuth){
+            throw new Error('unauthenticated')
+          }
         try {
             const genre = new Genre({
                 name: genreInput.name,
@@ -18,7 +21,10 @@ module.exports={
             throw error;
         }
     },
-    updateGenre: async ({ id, genreInput }) => {
+    updateGenre: async ({ id, genreInput },req) => {
+        if(!req.isAuth){
+            throw new Error('unauthenticated')
+          }
         try {
             const updatedGenre = await Genre.findByIdAndUpdate(
                 id,
@@ -39,7 +45,10 @@ module.exports={
             throw err
         }
     },
-    genres: async () => {
+    genres: async (args,req) => {
+        if(!req.isAuth){
+            throw new Error('unauthenticated')
+          }
         try {
             const genres = await Genre.find();
             if (!genres.length) {

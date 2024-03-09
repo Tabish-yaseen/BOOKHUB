@@ -1,7 +1,9 @@
 const Author = require('../../models/author');
+const jwt = require('jsonwebtoken')
 const bcrypt = require('bcryptjs');
+require('dotenv').config();
 
-module.exports = {
+ module.exports = {
     createAuthor: async (args) => {
       try {
         const existingAuthor = await Author.findOne({ email: args.authorInput.email });
@@ -21,6 +23,33 @@ module.exports = {
         throw err;
       }
     },
+
+    login: async ({ email, password }) => {
+      try {
+        const author = await Author.findOne({ email: email });
+        if (!author) {
+          throw new Error('Author does not exist');
+        }
+    
+        const isPassword = await bcrypt.compare(password, author.password);
+    
+        if (isPassword) {
+          const token = jwt.sign(
+            { authorId: author.id, email: author.email },
+            process.env.JWT_SECRET,
+            { expiresIn: '1h' }
+          );
+    
+          return { authorId: author.id, token: token, tokenExpiration: 1 };
+        } else {
+          throw new Error('Password is incorrect');
+        }
+      } catch (err) {
+        throw err;
+      }
+    },
+    
+
     authors:async()=>{
         try{
       const authors= await Author.find()

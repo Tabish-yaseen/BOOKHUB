@@ -6,11 +6,15 @@ const mongoose = require("mongoose");
 const graphQlSchema=require('./graphql/schema/index')
 const graphqlResolver=require('./graphql/resolver')
 
+const authenticateMiddleware=require('./middleware/authenticate')
+
 require('dotenv').config();
 
 const app = express();
 
 app.use(bodyParser.json());
+
+app.use(authenticateMiddleware)
 
 
 

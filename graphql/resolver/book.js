@@ -2,7 +2,10 @@ const Book = require("../../models/book");
 const { getAuthor, getGenres } = require("./helpers");
 
 module.exports = {
-  books: async () => {
+  books: async (args,req) => {
+    if(!req.isAuth){
+        throw new Error('unauthenticated')
+      }
     try {
       const books = await Book.find();
 
@@ -23,13 +26,17 @@ module.exports = {
     }
   },
 
-  createBook: async (args) => {
+  createBook: async (args,req) => {
+    if(!req.isAuth){
+        throw new Error('unauthenticated')
+      }
+    console.log(req.authorId,"heee");
     try {
       const book = new Book({
         title: args.bookInput.title,
         description: args.bookInput.description,
         publicationDate: new Date(args.bookInput.publicationDate),
-        author: args.bookInput.authorId,
+        author: req.authorId,
         genres: args.bookInput.genreIds,
       });
 
@@ -51,7 +58,10 @@ module.exports = {
     }
   },
 
-  updateBook: async ({ id, bookInput }) => {
+  updateBook: async ({ id, bookInput },req) => {
+    if(!req.isAuth){
+        throw new Error('unauthenticated')
+      }
     try {
       const book = await Book.findById(id);
 
@@ -62,7 +72,7 @@ module.exports = {
       book.title = bookInput.title;
       book.description = bookInput.description;
       book.publicationDate = new Date(bookInput.publicationDate);
-      book.author = bookInput.authorId;
+      book.author = req.authorId;
       book.genres = bookInput.genreIds;
 
       const updatedBook = await book.save();
@@ -81,7 +91,10 @@ module.exports = {
     }
   },
 
-  deleteBook: async ({ id }) => {
+  deleteBook: async ({ id },req) => {
+    if(!req.isAuth){
+        throw new Error('unauthenticated')
+      }
     try {
       const deletedBook = await Book.findByIdAndDelete(id);
 
