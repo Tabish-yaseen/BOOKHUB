@@ -4,6 +4,7 @@ const bcrypt = require('bcryptjs');
 require('dotenv').config();
 
  module.exports = {
+
     createAuthor: async (args) => {
       try {
         const existingAuthor = await Author.findOne({ email: args.authorInput.email });
@@ -17,7 +18,6 @@ require('dotenv').config();
           password: hashedPassword,
         });
         const result = await author.save();
-        // return result
         return { ...result._doc,password:null, _id: result.id };
       } catch (err) {
         throw err;

@@ -14,7 +14,7 @@ const app = express();
 
 app.use(bodyParser.json());
 
-app.use(authenticateMiddleware)
+// app.use(authenticateMiddleware)
 
 
 

@@ -1,9 +1,7 @@
-
 const Author = require('../../models/author');
 const Genre = require('../../models/genre');
 
 const getAuthor = async (authorId) => {
-  // console.log((authorId));
   try {
     const author = await Author.findById(authorId);
     return {
@@ -16,7 +14,6 @@ const getAuthor = async (authorId) => {
 };
 
 const getGenres = async (genreIds) => {
-  console.log(genreIds);
   try {
     const genres = await Genre.find({ _id: { $in: genreIds } });
     return genres.map((genre) => ({
@@ -28,5 +25,17 @@ const getGenres = async (genreIds) => {
   }
 };
 
-exports.getAuthor=getAuthor
-exports.getGenres=getGenres
+const getAllAuthorEmails = async () => {
+  try {
+    const allAuthors = await Author.find();
+    return allAuthors.map((author) => author.email);
+  } catch (err) {
+    throw err;
+  }
+};
+
+module.exports = {
+  getAuthor,
+  getGenres,
+  getAllAuthorEmails,
+};
