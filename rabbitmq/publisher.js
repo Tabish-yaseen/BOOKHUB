@@ -1,11 +1,11 @@
 const amqp = require('amqplib/callback_api');
 
 function publishNewBookNotification(bookData) {
-  amqp.connect('amqp://localhost', function (error0, connection) {
+  amqp.connect('amqp://localhost', (error0, connection) =>{
     if (error0) {
       throw error0;
     }
-    connection.createChannel(function (error1, channel) {
+    connection.createChannel((error1, channel) =>{
       if (error1) {
         throw error1;
       }
@@ -15,12 +15,12 @@ function publishNewBookNotification(bookData) {
 
       channel.assertExchange(exchange, 'direct', {
         durable: false,
-      });
+      })
 
       const message = JSON.stringify(bookData)
 
       channel.publish(exchange, routingKey, Buffer.from(message));
-      console.log(` [x] Sent book notification: ${message}`);
+      console.log(`Sent book notification: ${message}`);
     });
 
     setTimeout(function () {

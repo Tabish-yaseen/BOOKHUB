@@ -33,7 +33,7 @@ module.exports = {
         title: args.bookInput.title,
         description: args.bookInput.description,
         publicationDate: new Date(args.bookInput.publicationDate),
-        author: req.authorId,//"65eb7da8d1d90288423e76a4"
+        author: req.authorId, //"65eb7da8d1d90288423e76a4",
         genres: args.bookInput.genreIds,
       });
 
@@ -47,7 +47,7 @@ module.exports = {
       const authorEmails=await getAllAuthorEmails()
 
       const bookData = {
-        title: result.title,
+        bookTitle: result.title,
         authorEmails,
       };
       publishNewBookNotification(bookData);
