@@ -6,12 +6,14 @@ module.exports = buildSchema(`
     username: String!
     email: String!
     password: String
+    books: [Book!]!
   }
 
   type Genre {
     _id: ID!
     name: String!
     description: String!
+    author:Author!
   }
 
   type Book {
@@ -53,6 +55,7 @@ module.exports = buildSchema(`
     authors: [Author!]!
     genres: [Genre!]!
     books: [Book!]!
+    getAuthorBooks(authorId: ID!): [Book!]!
     
   }
 

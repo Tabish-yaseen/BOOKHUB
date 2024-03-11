@@ -16,12 +16,12 @@ const bookSchema = new Schema({
     required: true,
   },
   author: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: Schema.Types.ObjectId,
     ref: 'Author',
     required: true,
   },
   genres:  [{ 
-    type: mongoose.Schema.Types.ObjectId,
+    type: Schema.Types.ObjectId,
     ref: 'Genre',
     required: true,
   }],

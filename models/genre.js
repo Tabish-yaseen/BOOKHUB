@@ -11,6 +11,9 @@ const genreSchema = new Schema({
     type: String,
     required: true,
   },
+  author:{
+    type:Schema.Types.ObjectId
+  }
 });
 
 module.exports = mongoose.model('Genre', genreSchema);

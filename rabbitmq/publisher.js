@@ -19,7 +19,7 @@ function publishNewBookNotification(bookData) {
 
       const message = JSON.stringify(bookData)
 
-      channel.publish(exchange, routingKey, Buffer.from(message));
+       channel.publish(exchange, routingKey, Buffer.from(message));
       console.log(`Sent book notification: ${message}`);
     });
 

@@ -3,6 +3,7 @@ const bodyParser = require("body-parser");
 const { graphqlHTTP } = require("express-graphql");
 
 const mongoose = require("mongoose");
+
 const graphQlSchema=require('./graphql/schema/index')
 const graphqlResolver=require('./graphql/resolver')
 
@@ -38,3 +39,4 @@ mongoose.connect(process.env.MONGO_URL)
   .catch((err) => {
     console.log('Error connecting to MongoDB:', err);
   });
+  
