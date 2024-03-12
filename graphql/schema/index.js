@@ -25,6 +25,15 @@ module.exports = buildSchema(`
     genres: [Genre!]!
   }
 
+  type BookDownload {
+    _id: ID!
+    book: Book!
+    author: Author!
+    downloadUrl: String!
+    downloadedAt: String!
+  }
+  
+
   input AuthorInput {
     username: String!
     email: String!
@@ -68,6 +77,7 @@ module.exports = buildSchema(`
 
     createBook(bookInput: BookInput): Book
     updateBook(id: ID!, bookInput: BookInput): Book
+    createBookUrl(bookId: ID!): BookDownload!
     deleteBook(id: ID!): Book
   }
 

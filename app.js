@@ -7,7 +7,7 @@ const mongoose = require("mongoose");
 const graphQlSchema=require('./graphql/schema/index')
 const graphqlResolver=require('./graphql/resolver')
 
-const authenticateMiddleware=require('./middleware/authenticate')
+const authenticateMiddleware=require('./authenticationmiddleware/authenticate')
 
 require('dotenv').config();
 
