@@ -28,6 +28,7 @@ module.exports = {
       if (!booksFromDB || booksFromDB.length === 0) {
         return [];
       }
+      console.log('fetching from db')
           // cache the books fetched from db
       await setAsync('all_books', JSON.stringify(booksFromDB), 'EX', 10);
        // returning the result
@@ -54,7 +55,7 @@ module.exports = {
         title: args.bookInput.title,
         description: args.bookInput.description,
         publicationDate: new Date(args.bookInput.publicationDate),
-        author: req.authorId,
+        author:req.authorId,
         genres: args.bookInput.genreIds,
       });
           // saving the book details in db
@@ -66,7 +67,7 @@ module.exports = {
 
 
 // adding book to the creator(author)
-      const author = await Author.findById(req.authorId);
+      const author = await Author.findById(req.authorId) 
        if (author) {
        author.books.push(result._id)
        await author.save()
@@ -102,6 +103,7 @@ module.exports = {
   // Attempting to fetch cached author's books
       const cachedAuthorBooks = await getAsync(`${authorId}`);
       if (cachedAuthorBooks) {
+        console.log('fetched from cache')
         return JSON.parse(cachedAuthorBooks).map((book)=>{
           return{
             ...book,
@@ -118,11 +120,13 @@ module.exports = {
         if (!author) {
           throw new Error('Author not found');
         }
+        
          
         // fetching the books of author
         const books = await Book.find({author:authorId});
+        console.log('fetched from db')
          // catch the author's book fetched from db
-        await setAsync(`${authorId}`, JSON.stringify(books), 'EX', 300);
+        await setAsync(`${authorId}`, JSON.stringify(books), 'EX', 10);
 
         // returning the  author's books
         return books.map((book)=>{
@@ -133,7 +137,7 @@ module.exports = {
           genres:getGenres.bind(this,book._doc.genres)
 
           }
-          
+           
         })
       }
     } catch (err) {
@@ -153,7 +157,7 @@ module.exports = {
       }
     
        // checking if the book is of the author who created the book
-      if (book.author.toString() !== req.authorId) {
+      if (book.author.toString() !==req.authorId ){
         throw new Error('You are not authorized to update this book')
       }
       // updating the book
@@ -198,6 +202,13 @@ module.exports = {
       if (!deletedBook) {
         throw new Error('Book not found')
       }
+
+    const author = await Author.findById(req.authorId);
+    if (!author) {
+      throw new Error('Author not found');
+    }
+    author.books = author.books.filter(bookId => bookId.toString() !== id);
+    await author.save();
       // deleting the deleted book  from the cache
       await delAsync(`${id}`)
       

@@ -8,7 +8,7 @@ module.exports = {
     if (!req.isAuth) {
       throw new Error('Unauthenticated');
     }
-      // fetching the book
+      //fetching the book
     const book = await Book.findById(bookId);
     if (!book) {
       throw new Error('Book not found');
@@ -22,7 +22,7 @@ module.exports = {
       // saving into db
     const bookDownload = new BookDownload({
       book: bookId,
-      author: req.authorId,
+      author:req.authorId,
       downloadUrl: s3UploadResponse,
     })
 

@@ -44,7 +44,7 @@ const getBooksByIds = async (bookIds) => {
     // Attempting to fetch cached cached books
     let cachedBooks = await getAsync(`bookids${bookIds}`);
     if (cachedBooks) {
-      console.log('fetch from catche')
+  
       cachedBooks = JSON.parse(cachedBooks);
       // returning the  books from the cache
       return cachedBooks.map((book) => ({
@@ -61,7 +61,7 @@ const getBooksByIds = async (bookIds) => {
       if (!booksFromDB || booksFromDB.length === 0) {
         return [];
       }
-      console.log('fetch from db')
+      
       // cache the books fetched from db
       await setAsync(`bookids${bookIds}`, JSON.stringify(booksFromDB), 'EX', 100)
       // returning the books

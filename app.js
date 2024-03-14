@@ -12,10 +12,11 @@ const authenticateMiddleware=require('./authenticationmiddleware/authenticate')
 require('dotenv').config();
 
 const app = express();
+app.use(authenticateMiddleware)
 
 app.use(bodyParser.json());
 
-app.use(authenticateMiddleware)
+
 
 
 

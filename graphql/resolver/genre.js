@@ -39,7 +39,7 @@ module.exports={
                 throw new Error('Genre not found')
             }
               // checking if the author is same who created the genre or not
-            if (existingGenre.author.toString() !== req.authorId) {
+            if (existingGenre.author.toString() !==req.authorId){ 
                 throw new Error('You are not authorized to update this Genre')
             }
               // updating the genre
